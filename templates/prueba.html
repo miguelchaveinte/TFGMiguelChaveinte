@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <!-- https://www.youtube.com/watch?v=qwRTUeAZoF8-->
+<head>
+    <title>Pesan Go-Back</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div id="pesan">
+
+        <h1> Filtro de trayectos</h1>
+        <div class="shadow card text-left collapse show" id="cartaFiltro">
+            <div class="card-header">
+            <ul class="card-header-tabs nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+            <a class="nav-link active" id="user-tab" data-toggle="tab"
+           href="#user" role="tab" aria-controls="user" aria-selected="true">Tipo de usuario
+           </a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" id="age-tab" data-toggle="tab" href="#age"
+           role="tab" aria-controls="age" aria-selected="false">Rango de edad </a>
+            </li>
+            </ul>
+            </div>
+            <div class="tab-content card-body" id="myTabContent">
+            <div class="tab-pane fade show active" id="user" role="tabpanel"
+           aria-labelledby="user-tab">
+            <h5 class="card-title">Filtro por tipo de usuario</h5>
+            <h6 class="card-subtitle text-muted">Seleccione un tipo de usuario
+           para ver los trayectos</h6>
+            <br>
+            <div class="btn-group btn-group-toggle btn-group-sm" datatoggle="buttons">
+            <label class="btn btn-outline-primary active">
+            <input type="radio" name="options" id="option1"
+           autocomplete="off" checked> Todos
+            </label>
+            <label class="btn btn-outline-primary">
+            <input type="radio" name="options" id="option2"
+           autocomplete="off"> Usuario con pase
+            </label>
+            <label class="btn btn-outline-primary">
+            <input type="radio" name="options" id="option3"
+           autocomplete="off"> Usuario ocasional
+            </label>
+            <label class="btn btn-outline-primary">
+            <input type="radio" name="options" id="option4"
+           autocomplete="off"> Empleados BiciMad
+            </label>
+            </div>
+            <small class="form-text text-muted" id="infoTrayectos1">Seleccione un
+           grupo</small>
+            </div>
+            <div class="tab-pane fade" id="age" role="tabpanel" arialabelledby="age-tab">
+            <h5 class="card-title">Filtro por edad</h5>
+            <h6 class="card-subtitle text-muted">Seleccione un rango de edad para
+           ver los trayectos</h6>
+            <select class="custom-select align-bottom mt-4 w-50"
+           id="seleccionEdad">
+            <option value="0">Todos</option>
+            <option value="1">Rango 1 (0-16 años)</option>
+            <option value="2">Rango 2 (17-18 años)</option>
+            <option value="3">Rango 3 (19-26 años)</option>
+ <option value="4">Rango 4 (27-40 años)</option>
+ <option value="5">Rango 5 (41-65 años)</option>
+ <option value="6">Rango 6 (66- años)</option>
+ </select>
+ <small class="form-text text-muted" id="infoTrayectos2">Seleccione un
+grupo</small>
+ </div>
+ </div>
+ </div>
+
+
+
+
+ <h1> Estadisticas</h1>
+        <div class="shadow card text-left collapse show" id="cartaEstadisticas">
+            <div class="card-header">
+            <ul class="card-header-tabs nav nav-tabs" id="myTab2" role="tablist">
+            <li class="nav-item">
+            <a class="nav-link active" id="graphic-tab" data-toggle="tab"
+           href="#graphic" role="tab" aria-controls="graphic" aria-selected="true">Grafico
+           trayectos diarios </a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" id="other-tab" data-toggle="tab" href="#other"
+           role="tab" aria-controls="other" aria-selected="false">Grafico por grupos </a>
+            </li>
+            </ul>
+            </div>
+            <div class="tab-content card-body" id="myTabContent2">
+            <div class="tab-pane fade show active" id="graphic" role="tabpanel" arialabelledby="graphic-tab">
+            <h5 class="card-title">Grafico por horas</h5>
+            <h6 class="card-subtitle text-muted">Observe las estadisticas de viajes
+           diarios</h6>
+            <div class="w-100" id="graficoEstadisticas"></div>
+            </div>
+           
+            <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="othertab">
+            <h5 class="card-title">Grafico por grupos</h5>
+            <h6 class="card-subtitle text-muted">Observe las estadisticas de viajes por
+           grupos</h6>
+            <div class="w-100" id="graficoEstadisticasGrupos"></div>
+            </div>
+            </div>
+            </div>
+
+
+
+              
+
+
+
+
+
+           </div>
+           
+    </div>
+    <div id="map"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_qHKYFum4g_Y8e7sgqS3T26Fjz1IxBpg&libraries=places"></script>
+    <script src="script.js"></script>
+    <script>
+        $('#myTab a').on('click', function (event) {
+          event.preventDefault()
+          $(this).tab('show')
+        })
+      </script>
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+/* Definir variables CSS */
+:root {
+    --primary-color: #76d275;
+    --secondary-color: #f0f0f0;
+    --tertiary-color: #333333;
+    --font-family: Arial, sans-serif;
+  }
+  
+  /* Estilos generales */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: var(--font-family);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  h1, h5 {
+    color: var(--tertiary-color);
+  }
+  
+  /* Estilos del panel de parámetros */
+  #parametros {
+    flex: 1;
+    min-width: 400px;
+    max-width: 50%;
+    height: 100vh;
+    background: var(--primary-color);
+    overflow-y: auto;
+  }
+  
+  .card {
+    margin: 10px;
+  }
+  
+  .card-header {
+    background: var(--secondary-color);
+  }
+  
+  .card-body {
+    background: var(--secondary-color);
+  }
+  
+  .inner {
+    padding: 0px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  input {
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos del mapa */
+  #map {
+      height: 100vh;
+      flex-basis: 0;
+      flex-grow: 999;
+      overflow: hidden; 
+  }
+  
+  #map iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+  }
+  
+  /* Estilos del botón */
+  .btn-primary {
+    align-self: center;
+    width: fit-content;
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--tertiary-color);
+  }
+  
+  /* Estilos de las animaciones */
+  .rotate-icon {
+      transition: transform .3s linear; /* Añadir transición */
+  }
+  .rotate-icon.down {
+      transform: rotate(0deg);
+  }
+  .rotate-icon.up {
+      transform: rotate(180deg);
+  }
+  
+  #map iframe {
+      will-change: transform; /* Indicar cambio de transformación */
+      transition: transform .5s ease-in-out; /* Añadir transición suave */
+  }
+  
+  /* Estilos para diferentes anchuras de pantalla */
+  @media (max-width:800px) { /* Para pantallas menores o iguales a 800px */
+  
+      /* Ocultar el panel de parámetros */
+      #parametros {
+          display:none;
+      }
+  
+      /* Mostrar solo una imagen en el elemento <picture> */
+      picture source {
+          display:none;
+      }
+  }
+
+  /* Eliminar  efecto link en btn-link */ 
+
+.btn-link:hover, .btn-link:active, .btn-link:focus { text-decoration: none !important; }

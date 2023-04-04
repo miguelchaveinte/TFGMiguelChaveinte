@@ -1,0 +1,119 @@
+/* Definir variables CSS */
+:root {
+    --primary-color: #76d275;
+    --secondary-color: #f0f0f0;
+    --tertiary-color: #333333;
+    --font-family: Arial, sans-serif;
+  }
+  
+  /* Estilos generales */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: var(--font-family);
+    display: grid; /* Usar una rejilla CSS */
+    grid-template-columns: minmax(400px, 50%) 1fr; /* Definir dos columnas */
+    grid-template-rows: minmax(100vh, auto); /* Definir una fila */
+    grid-template-areas: /* Definir áreas con nombres semánticos */
+      "parametros map"
+      "parametros map";
+    overflow-x: hidden; /* Ocultar el scroll horizontal */
+  }
+  
+  h1 {
+    color: var(--tertiary-color);
+    font-size: 4rem; /* Aumentar el tamaño del título */
+  }
+  
+  h1::first-letter {
+    initial-letter: 2; /* Aumentar el tamaño de la primera letra */
+    color: var(--primary-color); /* Cambiar el color de la primera letra */
+    text-shadow: 2px 2px var(--secondary-color); /* Añadir una sombra al texto */
+  }
+  
+  h5 {
+    color: var(--tertiary-color);
+  }
+  
+  /* Estilos del panel de parámetros */
+  #parametros {
+    grid-area: parametros; /* Asignar el área correspondiente */
+    background: var(--primary-color);
+    overflow-y: auto;
+    scroll-snap-type: y mandatory; /* Usar el ajuste de desplazamiento */
+  }
+  
+  .card {
+    margin: 10px;
+  }
+  
+  .card-header {
+    background: var(--secondary-color);
+  }
+  
+  .card-body {
+    background: var(--secondary-color);
+  }
+  
+  .inner {
+    padding: 10px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="datetime-local"] {
+    margin-bottom: 10px;
+  }
+  
+  input[type="range"] {
+    -webkit-appearance: none; /* Ocultar el aspecto nativo */
+  }
+  
+  input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: .5rem;
+    background-color: var(--secondary-color); /* Color de la pista */
+  }
+  
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Ocultar el aspecto nativo */
+    width: .75rem;
+    height: .75rem;
+    border-radius: .375rem;
+    background-color: var(--tertiary-color); /* Color del controlador */
+  }
+  /* Estilos del mapa */
+#map {
+    grid-area: map; /* Asignar el área correspondiente */
+    overflow: hidden; 
+    scroll-snap-align: start; /* Usar el ajuste de desplazamiento */
+}
+
+#map iframe {
+    width: calc(100vw + (100vw - min(100vw, max(400px,50%)))); /* Ajustar el ancho del iframe al ancho de la ventana */
+    height: calc(100vh + (100vh - min(100vh, max(400px,50%)))); /* Ajustar el alto del iframe al alto de la ventana */
+    border: none;
+    will-change: transform; /* Indicar cambio de transformación */
+    animation-name: map-move; /* Añadir animación con keyframes */
+    animation-duration: .5s; /* Duración de la animación */
+    animation-timing-function: ease-in-out; /* Función de tiempo de la animación */
+    animation-fill-mode: forwards; /* Mantener el estado final de la animación */
+}
+
+/* Definir los keyframes de la animación del mapa */
+@keyframes map-move {
+    from {transform: translate(-5%, -5%);} /* Estado inicial con una pequeña traslación negativa */
+    to {transform: translate(0%,0%);} /* Estado final con una traslación nula */
+}
