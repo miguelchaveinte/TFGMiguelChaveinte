@@ -1,5 +1,12 @@
 templates/prueba.html
 templates/prueba2.html
+templates/pruebaPlotly.html
 
 static/css/style.css
 static/css/style3.css
+
+.gitignore
+
+__pycache__
+.venv
+.idea

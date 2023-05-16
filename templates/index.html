@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Prueba TFG</title>
+        <title>TFG Miguel Chaveinte</title>
         <meta name="viewport" content="initial-scale=1.0">
         <meta charset="utf-8">
         
@@ -93,11 +93,11 @@
                       </select>
 
                       <label for="upperBound">Upper Bound:</label>
-                      <input type="text" id="upperBound" name="upperBound" required>
+                      <input type="text" id="upperBound" name="upperBound" value=8 required>
                       <label for="lowerBound">Lower Bound:</label>
-                      <input type="text" id="lowerBound" name="lowerBound" required>
+                      <input type="text" id="lowerBound" name="lowerBound" value=8 required>
                       <label for="population">Population:</label>
-                      <input type="text" id="population" name="population" required>
+                      <input type="text" id="population" name="population" value=10 required>
                       <label for="generations">Generations:</label>
                       <input type="number" id="generations" name="generations" value=50 required>
                       <label for="offspring">Offspring:</label>
@@ -124,7 +124,6 @@
         <div id="map">
           <iframe  src="https://www.openstreetmap.org/export/embed.html?bbox=-74.88281250000001%2C-34.88593094075316%2C-22.060546875%2C58.81374171570782&amp;layer=mapnik"></iframe>
         </div>
-        <script src="script.js"></script>
         <script>
             $('.collapse').on('shown.bs.collapse', function(){
               $(this).parent().find(".rotate-icon").removeClass("down").addClass("up");
