@@ -71,10 +71,10 @@ def initial_population(population_size, start_point, end_point, upper_bound, low
 
     routes = []
     great_circle_route = great_circle(start_point, end_point, n_points)
-    routes.append(great_circle_route)
+    #routes.append(great_circle_route)
     route_upper = [[x + upper_bound if i == 1 and 0 < j < len(row) - 1 else x for j, x in enumerate(row)] for i, row in enumerate(great_circle_route)]
     route_lower = [[x - lower_bound if i == 1 and 0 < j < len(row) - 1 else x for j, x in enumerate(row)] for i, row in enumerate(great_circle_route)]
-    for i in range(population_size-1):
+    for i in range(population_size):
         waypoints_lat=[]
         #waypoints_lat.append(great_circle_route[1][0]) #añadimos el start_lat 
         # -> lo quito pq ya en route_upper y lower lo he tenido en cuenta que empiece y termine igual y por tanto random da la coordenada.

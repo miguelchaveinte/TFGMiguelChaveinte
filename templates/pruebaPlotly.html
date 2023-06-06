@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TFG Miguel Chaveinte</title>
+    <meta name="viewport" content="initial-scale=1.0" />
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="../static/css/style2.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script>
+      
+      function mapClear(){
+        var map = document.getElementById("map");
+
+        /*
+        [[-74.006      -67.15544505 -59.94107002 -51.14616685 -43.40469336
+  -35.90589996 -28.74957105 -21.99673863 -15.67149715  -9.1393    ]
+ [ 40.7128      35.24971181  51.17287723  45.3975302   50.03275162
+   42.89443359  48.77765069  39.20723403  37.37093754  38.7223    ]]
+        */
+          
+        var data = [
+          {
+            type: "scattermapbox",
+            lat: [],
+            lon: [],
+          },
+        ]; 
+
+        /*
+        var data = [
+          {
+            type: "scattermapbox",
+            mode: 'markers+lines',
+            lat: [ 40.7128   ,   35.24971181 , 51.17287723 , 45.3975302 ,  50.03275162,
+   42.89443359 , 48.77765069 , 39.20723403,  37.37093754 , 38.7223    ],
+            lon: [-74.006 ,     -67.15544505, -59.94107002, -51.14616685 ,-43.40469336,
+  -35.90589996, -28.74957105, -21.99673863 ,-15.67149715 , -9.1393    ],
+            text: 'great circle'
+          },
+        ];*/
+  
+        var layout = {
+          mapbox: {
+            style: "open-street-map",
+            bearing: 0,
+            center: { lat: 40, lon: -50 },
+            pitch: 0,
+            zoom: 2.5,
+          },
+          margin: { r: 0, t: 0, l: 0, b: 0 },
+        };
+  
+        Plotly.plot(map, data, layout, { showSendToCloud: true });
+      }
+  
+  
+      function mapUpdatePopulation(population,gridTime,ds_lat,ds_long){
+      //function mapUpdatePopulation(population){
+        var map = document.getElementById("map");
+        
+        /*
+        var data = [
+          {
+            type: "scattermapbox",
+            mode: 'markers+lines',
+            lat: population[0][1],
+            lon: population[0][0],
+            text: 'great circle'
+          },
+        ];
+
+        for(var i=1;i<population.length;i++){
+          data.push({
+            type: "scattermapbox",
+            mode: 'markers+lines',
+            lat: population[i][1],
+            lon: population[i][0],
+            text: 'population '+i+'.... Cost '+ population[i][2]
+          });
+        }*/
+
+        var data = [
+          {
+            type: "heatmap",
+            colorscale: 'YlGnBu',
+            z=gridTime,
+            x=ds_long,
+            y=ds_lat,
+          },
+        ];
+
+        //var data = [{type: 'densitymapbox', lon: [10, 20, 30], lat: [15, 25, 35], z: [1, 3, 2]}];
+
+        /*var data = [
+          {
+            type: "densitymapbox",
+            lat: ds_lat,
+            lon: ds_long,
+            z: gridTime,
+          },
+        ]; */
+
+        /*var data = [
+          {
+            type: "scattermapbox",
+            lat: [],
+            lon: [],
+          },
+        ]; */
+
+        for(var i=0;i<population.length;i++){
+          data.push({
+            type: "scattermapbox",
+            mode: 'markers+lines',
+            lat: population[i][1],
+            lon: population[i][0],
+            text: population[i][2],
+          });
+        }
+  
+        var layout = {
+          mapbox: {
+            style: "open-street-map",
+            bearing: 0,
+            center: { lat: 40, lon: -50 },
+            pitch: 0,
+            zoom: 2.5,
+          },
+          showlegend: false,
+          margin: { r: 0, t: 0, l: 0, b: 0 },
+        };
+  
+        Plotly.plot(map, data, layout, { showSendToCloud: true });
+      }
+  
+  
+      </script>
+
+  </head>
+
+  <body>
+    <div id="parametros">
+      <form action="{{ url_for('runAlgorithm') }}" method="POST">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">
+              <button class="btn btn-link">Datos del barco</button>
+            </h5>
+          </div>
+          <div id="" class=" ">
+            <div class="card-body">
+              <div class="inner">
+                  <label for="shipWidth">Ship Width:</label>
+                  <input
+                    type="number"
+                    id="shipWidth"
+                    name="shipWidth"
+                    required
+                  />
+                  <label for="shipDraft">Ship Draft:</label>
+                  <input type="number" id="shipDraft" name="shipDraft" required />
+                  <label for="shipLength">Ship Length:</label>
+                  <input
+                    type="number"
+                    id="shipLength"
+                    name="shipLength"
+                    required
+                  />
+                  <label for="fechaSalida">Fecha Salida:</label>
+                  <input
+                    type="datetime-local"
+                    id="fechaSalida"
+                    name="fechaSalida"
+                    required
+                  />
+                  <label for="fechaLlegada">Fecha Llegada Deseada:</label>
+                  <input
+                    type="datetime-local"
+                    id="fechaLlegada"
+                    name="fechaLlegada"
+                    required
+                  />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">
+              <button class="btn btn-link">Datos de la ruta</button>
+            </h5>
+          </div>
+          <div id="" class=" ">
+            <div class="card-body">
+              <div class="inner">
+                  <label for="latSalida">Coord. Latitud Salida:</label>
+                  <input type="text" id="latSalida" name="latSalida" value="40.7128" required />
+                  <label for="lonSalida">Coord. Longitud Salida:</label>
+                  <input type="text" id="lonSalida" name="lonSalida" value="-74.0060" required />
+                  <label for="latDestino">Coord. Latitud Destino:</label>
+                  <input
+                    type="text"
+                    id="latDestino"
+                    name="latDestino"
+                    value="38.7223"
+                    required
+                  />
+                  <label for="lonDestino">Coord. Longitud Destino:</label>
+                  <input
+                    type="text"
+                    id="lonDestino"
+                    name="lonDestino"
+                    value="-9.1393"
+                    required
+                  />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">
+              <!-- class="btn btn-link collapsed"  -->
+              <button
+                class="btn btn collapsed" 
+                data-toggle="collapse"
+                data-target="#collapseOne"
+                aria-expanded="false"
+                aria-controls="collapseOne"
+              >
+                Opciones del algoritmo
+                <i class="fa fa-chevron-down float-right rotate-icon down"></i>
+              </button>
+            </h5>
+          </div>
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
+            <div class="card-body">
+              <div class="inner">
+                  <label for="algorithm">Algoritmo:</label>
+                  <select id="cars">
+                    <option value="nsga-ii" selected>NSGA-II</option>
+                    <option value="ga+pso">GA+PSO</option>
+                  </select>
+
+                  <label for="upperBound">Upper Bound:</label>
+                  <input
+                    type="text"
+                    id="upperBound"
+                    name="upperBound"
+                    value="8"
+                    required
+                  />
+                  <label for="lowerBound">Lower Bound:</label>
+                  <input
+                    type="text"
+                    id="lowerBound"
+                    name="lowerBound"
+                    value="8"
+                    required
+                  />
+                  <label for="population">Population:</label>
+                  <input
+                    type="text"
+                    id="population"
+                    name="population"
+                    value="100"
+                    required
+                  />
+                  <label for="generations">Generations:</label>
+                  <input
+                    type="number"
+                    id="generations"
+                    name="generations"
+                    value="50"
+                    required
+                  />
+                  <label for="offsprings">Offsprings:</label>
+                  <input type="text" id="offsprings" name="offsprings" value="20" required />
+                  <label for="tasaMutacion">Tasa Mutación:</label>
+                  <input
+                    type="text"
+                    id="tasaMutacion"
+                    name="tasaMutacion"
+                    value="0.7"
+                    required
+                  />
+                  <label for="waypoints">Número de waypoints:</label>
+                  <input
+                    type="text"
+                    id="waypoints"
+                    name="waypoints"
+                    value="100"
+                    required
+                  />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-center my-3">
+              <button class="btn btn-primary btn-lg" type="submit" id="ejecutar">Ejecutar Algoritmo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    </div>
+    <div id="map">
+      <!-- <iframe src="../static/pruebaPlotly.html" width="100%" height="300"></iframe> -->
+      {% if population %}
+        <script>
+          population={{population|tojson}}
+          gridTime={{gridTime|tojson}}
+          ds_lat={{ds_lat|tojson}}
+          ds_lon={{ds_lon|tojson}}
+          mapUpdatePopulation(population,gridTime,ds_lat,ds_lon)
+          //mapUpdatePopulation(population)
+        </script>
+      {% else %}
+      <script>
+        mapClear()
+      </script>
+      {% endif %}
+    </div>
+    <script>
+      $(".collapse")
+        .on("shown.bs.collapse", function () {
+          $(this)
+            .parent()
+            .find(".rotate-icon")
+            .removeClass("down")
+            .addClass("up");
+        })
+        .on("hidden.bs.collapse", function () {
+          $(this)
+            .parent()
+            .find(".rotate-icon")
+            .removeClass("up")
+            .addClass("down");
+        });
+    </script>
+
+
+<script type=text/javascript>
+/*
+  $(function() {
+    $('#ejecutar').on('click', function(e) {
+      e.preventDefault();
+      // Obtener los valores de los campos
+      var upperBound = $('#upperBound').val();
+      var lowerBound = $('#lowerBound').val();
+      var latSalida = $('#latSalida').val();
+      var lonSalida = $('#lonSalida').val();
+      var latDestino = $('#latDestino').val();
+      var lonDestino = $('#lonDestino').val();
+      // Enviar la petición al servidor con los datos
+      $.getJSON('/population', {
+        upperBound: upperBound,
+        lowerBound: lowerBound,
+        latSalida: latSalida,
+        lonSalida: lonSalida,
+        latDestino: latDestino,
+        lonDestino: lonDestino
+      }, function(data) {
+        // Aquí puedes hacer algo con los datos que te devuelve el servidor
+      });
+      return false;
+    });
+  });*/
+</script>
+</body>
+</html>
