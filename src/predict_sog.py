@@ -305,7 +305,7 @@ def grid_preparation(ds_wav,ds_phy,ship_length,ship_width,ship_draft,model):
 
 
 def calculateGridTime(SOG_N,SOG_E,SOG_S,SOG_W):
-    kmGridEW = np.load("./models/gridLengthEW.npy")  #TODO: REVISAR SI CAMBIO LA RUTA #"./models/finalEWBIEN/gridLengthEW.npy"
+    kmGridEW = np.load("./models/finalEWBIEN/gridLengthEW.npy")  #TODO: REVISAR SI CAMBIO LA RUTA #"./models/finalEWBIEN/gridLengthEW.npy"
     kmGridNS = np.load("./models/gridLengthNS.npy")
 
     timeGridE = SOG_E

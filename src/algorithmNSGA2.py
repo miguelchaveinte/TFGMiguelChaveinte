@@ -123,9 +123,17 @@ def algorithm_form(form):
         cost.append(gridsTime[0][2041-lat_point][long_point]) # usar get_closest . probar antes 
     route_minTime.append(cost)
 
+    route_minfuelUSe=route_minfuelUSe.tolist()
+    cost=[]
+    for i in range(len(route_minfuelUSe[0])-1):  #comprobar esto bien
+        long_point=get_closest(dat_wav.longitude.data,route_minfuelUSe[0][i])
+        lat_point=get_closest(dat_wav.latitude.data,route_minfuelUSe[1][i])
+        cost.append(gridsTime[0][2041-lat_point][long_point]) # usar get_closest . probar antes 
+    route_minfuelUSe.append(cost)
+
     print(route_minTime)
 
-    X, Y = np.meshgrid(dat_long, dat_lat)
+    X, Y = np.meshgrid(dat_long[1200:2160], dat_lat[1341:1641])
 
     # Convertir la matriz en un vector
     X = X.ravel()
@@ -136,7 +144,7 @@ def algorithm_form(form):
 
 
     #routes=runNSGA2Algorithm(start_point, end_point,start_time,end_time,population_size,upper_bound, lower_bound, waypoints,gridTime,offsprings,generations,dat_long,dat_lat)
-    return [route_minTime,route_minTime],gridsTime,df['latitude'][400:700].tolist(),df['longitude'][1200:2160].tolist()
+    return [route_minTime,route_minfuelUSe],gridsTime,df['latitude'].tolist(),df['longitude'].tolist()
 
 
 

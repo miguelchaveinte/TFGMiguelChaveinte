@@ -106,11 +106,13 @@
 
         var data = [
           {
-            type: "heatmap",
-            colorscale: 'YlGnBu',
-            z=gridTime,
-            x=ds_long,
-            y=ds_lat,
+            type: "densitymapbox",
+            name: 'timeGrid',
+            coloraxis: 'coloraxis',
+            radius:2,
+            z: gridTime,
+            lon: ds_long,
+            lat: ds_lat,
           },
         ];
 
@@ -133,10 +135,13 @@
           },
         ]; */
 
+        var nameRoutes=['in time', 'minFuel']
+
         for(var i=0;i<population.length;i++){
           data.push({
             type: "scattermapbox",
             mode: 'markers+lines',
+            name: nameRoutes[i],
             lat: population[i][1],
             lon: population[i][0],
             text: population[i][2],
@@ -152,10 +157,12 @@
             zoom: 2.5,
           },
           showlegend: false,
+          coloraxis: {colorscale: "Viridis"},
           margin: { r: 0, t: 0, l: 0, b: 0 },
         };
   
         Plotly.plot(map, data, layout, { showSendToCloud: true });
+        //Plotly.plot(map, data, { showSendToCloud: true });
       }
   
   
@@ -298,7 +305,7 @@
                     type="number"
                     id="generations"
                     name="generations"
-                    value="50"
+                    value="400"
                     required
                   />
                   <label for="offsprings">Offsprings:</label>
@@ -308,7 +315,7 @@
                     type="text"
                     id="tasaMutacion"
                     name="tasaMutacion"
-                    value="0.7"
+                    value="0.4"
                     required
                   />
                   <label for="waypoints">Número de waypoints:</label>
