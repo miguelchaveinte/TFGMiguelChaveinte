@@ -36,13 +36,6 @@
       function mapClear(){
         var map = document.getElementById("map");
 
-        /*
-        [[-74.006      -67.15544505 -59.94107002 -51.14616685 -43.40469336
-  -35.90589996 -28.74957105 -21.99673863 -15.67149715  -9.1393    ]
- [ 40.7128      35.24971181  51.17287723  45.3975302   50.03275162
-   42.89443359  48.77765069  39.20723403  37.37093754  38.7223    ]]
-        */
-          
         var data = [
           {
             type: "scattermapbox",
@@ -50,19 +43,6 @@
             lon: [],
           },
         ]; 
-
-        /*
-        var data = [
-          {
-            type: "scattermapbox",
-            mode: 'markers+lines',
-            lat: [ 40.7128   ,   35.24971181 , 51.17287723 , 45.3975302 ,  50.03275162,
-   42.89443359 , 48.77765069 , 39.20723403,  37.37093754 , 38.7223    ],
-            lon: [-74.006 ,     -67.15544505, -59.94107002, -51.14616685 ,-43.40469336,
-  -35.90589996, -28.74957105, -21.99673863 ,-15.67149715 , -9.1393    ],
-            text: 'great circle'
-          },
-        ];*/
   
         var layout = {
           mapbox: {
@@ -80,29 +60,8 @@
   
   
       function mapUpdatePopulation(population,gridTime,ds_lat,ds_long){
-      //function mapUpdatePopulation(population){
         var map = document.getElementById("map");
         
-        /*
-        var data = [
-          {
-            type: "scattermapbox",
-            mode: 'markers+lines',
-            lat: population[0][1],
-            lon: population[0][0],
-            text: 'great circle'
-          },
-        ];
-
-        for(var i=1;i<population.length;i++){
-          data.push({
-            type: "scattermapbox",
-            mode: 'markers+lines',
-            lat: population[i][1],
-            lon: population[i][0],
-            text: 'population '+i+'.... Cost '+ population[i][2]
-          });
-        }*/
 
         var data = [
           {
@@ -116,24 +75,6 @@
           },
         ];
 
-        //var data = [{type: 'densitymapbox', lon: [10, 20, 30], lat: [15, 25, 35], z: [1, 3, 2]}];
-
-        /*var data = [
-          {
-            type: "densitymapbox",
-            lat: ds_lat,
-            lon: ds_long,
-            z: gridTime,
-          },
-        ]; */
-
-        /*var data = [
-          {
-            type: "scattermapbox",
-            lat: [],
-            lon: [],
-          },
-        ]; */
 
         var nameRoutes=['in time', 'minFuel']
 
@@ -162,7 +103,6 @@
         };
   
         Plotly.plot(map, data, layout, { showSendToCloud: true });
-        //Plotly.plot(map, data, { showSendToCloud: true });
       }
   
   
@@ -297,7 +237,7 @@
                     type="text"
                     id="population"
                     name="population"
-                    value="100"
+                    value="200"
                     required
                   />
                   <label for="generations">Generations:</label>
@@ -305,7 +245,7 @@
                     type="number"
                     id="generations"
                     name="generations"
-                    value="400"
+                    value="500"
                     required
                   />
                   <label for="offsprings">Offsprings:</label>
@@ -315,7 +255,7 @@
                     type="text"
                     id="tasaMutacion"
                     name="tasaMutacion"
-                    value="0.4"
+                    value="0.3"
                     required
                   />
                   <label for="waypoints">Número de waypoints:</label>
