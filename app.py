@@ -36,7 +36,8 @@ def runAlgorithm():
         routes_display,gridTime,ds_lat,ds_lon=algorithm_form(form)
         
     timeGrid=np.where(gridTime[2] > 40000, np.nan, gridTime[2])
-    return render_template('pruebaPlotly.html',population=routes_display,gridTime=timeGrid[400:1200,1200:2160][::-1].reshape(-1).tolist(),ds_lat=ds_lat,ds_lon=ds_lon)
-    
+    return render_template('pruebaPlotly.html',population=routes_display,gridTime=timeGrid[400:700,1200:2160][::-1].reshape(-1).tolist(),ds_lat=ds_lat,ds_lon=ds_lon)   
+    #gridTime=timeGrid[400:1200,1200:2160]
+
 if __name__ == "__main__":
     app.run(debug=True)

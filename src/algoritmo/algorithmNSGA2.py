@@ -73,30 +73,6 @@ def algorithm_form(form):
     shipWidth=float(form['shipWidth'])
     shipDraft=float(form['shipDraft'])
 
-    #shipResist=shipLength*shipWidth*shipDraft
-
-
-    #1-OBTENEMOS LAS CONDICIOENS. FILTRAMOS POR LA FECHA LAS CONDICIONES. CALCULAMOS EL GRIDTIME
-    '''
-    
-    
-    ds_wav,ds_phy=get_condiciones()
-
-    #decididir que fecha escoger -> cogemos la de salida por la imposibilidad de calcular todos los dias
-
-    dat_wav=ds_wav.sel(time=startTime_object,method='nearest')
-    dat_phy=ds_phy.sel(time=startTime_object,method='nearest')
-
-    dat_long=dat_phy.longitude.values
-    dat_lat=dat_phy.latitude.values
-
-    model=load('./models/DTR_model.joblib')
-
-    [SOG_N,SOG_E,SOG_S,SOG_W]=grid_preparation(dat_wav,dat_phy,shipLength,shipWidth,shipDraft,model)
-
-    gridsTime=calculateGridTime(SOG_N,SOG_E,SOG_S,SOG_W)
-
-    '''
 
     gridsTime,dat_wav,dat_phy=condiciones_mar(startTime_object,shipLength,shipWidth,shipDraft)
 
@@ -145,7 +121,7 @@ def algorithm_form(form):
     print(route_minTime)
 
 
-    X, Y = np.meshgrid(dat_long[1200:2160], dat_lat[841:1641]) #1641
+    X, Y = np.meshgrid(dat_long[1200:2160],dat_lat[1341:1641]) # dat_lat[841:1641]
 
     # Convertir la matriz en un vector
     X = X.ravel()
@@ -323,97 +299,3 @@ def runNSGA2Algorithm(start_point, end_point,start_time,end_time,population_size
 
     return res
 
-'''
-
-
-import random
-
-gridTimeRandom=[[[random.random() for i in range(4320)] for j in range(2041)]for x in range (5)]
-print(gridTimeRandom[0][0][3])
-
-import xarray as xr
-import warnings
-warnings.simplefilter("ignore")
-from datetime import datetime
-'''
-
-'''instantiate the connection to the OPeNDAP server thanks to a local 
-function copernicusmarine_datastore(): '''
-
-#https://marine.copernicus.eu/news/access-data-opendap-erddap-api
-#https://nrt.cmems-du.eu/thredds/dodsC/cmems_mod_glo_wav_anfc_0.083deg_PT3H-i.html
-#https://help.marine.copernicus.eu/en/articles/4683022-what-are-the-advantages-of-the-file-transfer-protocol-ftp-data-access-service#h_3a5f09adf9
-
-#! /usr/bin/env python3
-# -*- coding: utf-8 -*-
-__author__ = "Copernicus Marine User Support Team"
-__copyright__ = "(C) 2021 E.U. Copernicus Marine Service Information"
-__credits__ = ["E.U. Copernicus Marine Service Information"]
-__license__ = "MIT License - You must cite this source"
-__version__ = "202104"
-__maintainer__ = "D. Bazin, E. DiMedio, C. Giordan"
-__email__ = "servicedesk dot cmems at mercator hyphen ocean dot eu"
-
-
-'''
-
-
-
-def copernicusmarine_datastore(dataset, username, password):
-    from pydap.client import open_url
-    from pydap.cas.get_cookies import setup_session
-    cas_url = 'https://cmems-cas.cls.fr/cas/login'
-    session = setup_session(cas_url, username, password)
-    session.cookies.set("CASTGC", session.cookies.get_dict()['CASTGC'])
-    database = ['my', 'nrt']
-    url = f'https://{database[0]}.cmems-du.eu/thredds/dodsC/{dataset}'
-    try:
-        data_store = xr.backends.PydapDataStore(open_url(url, session=session))
-    except:
-        url = f'https://{database[1]}.cmems-du.eu/thredds/dodsC/{dataset}'
-        data_store = xr.backends.PydapDataStore(open_url(url, session=session))
-    return data_store
-
-
-USERNAME = 'mchaveinte'
-PASSWORD = 'Cuchiagosto23'
-DATASET_ID ='cmems_mod_glo_phy_anfc_0.083deg_P1D-m'
-
-data_phy_prueba=copernicusmarine_datastore(DATASET_ID, USERNAME, PASSWORD)
-
-dataset_phy_prueba= xr.open_dataset(data_phy_prueba)
-import random
-
-gridTimeRandom= [[[random.random() for i in range(4320)] for j in range(2041)] for x in range (4)]
-
-print(np.shape(gridTimeRandom[0]))
-
-startTime_object = datetime.strptime('20.06.2021 12:00', "%d.%m.%Y %H:%M" )
-endTime_object = datetime.strptime('30.06.2021 12:00', "%d.%m.%Y %H:%M" )
-
-print(startTime_object)
-
-import pandas as pd
-
-print(dataset_phy_prueba.sel(time=startTime_object,method='nearest'))
-
-#TODO: comprobar offspring mayor que 10
-
-res=runNSGA2Algorithm([40.7128,-74.0060],[38.7223,-9.1393],startTime_object,endTime_object,10,8,8,10,gridTimeRandom,10,20,dataset_phy_prueba.longitude.data,dataset_phy_prueba.latitude.data,0.5)
-
-results = res.F
-routes = res.X
-
-print(results)
-print('-------------')
-print(routes)
-
-print('**********************')
-route_minTime = routes[np.argmin(results[:,0], axis=0)]
-route_minfuelUSe = routes[np.argmin(results[:,1], axis=0)]
-
-print(route_minTime)
-print(route_minfuelUSe)
-
-
-'''
